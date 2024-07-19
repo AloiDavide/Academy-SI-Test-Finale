@@ -14,7 +14,7 @@ import {UserService} from "../service/user/user.service";
     styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-    registerRequest: RegisterRequest = new RegisterRequest("", "", "", "", [1]);
+    registerRequest: RegisterRequest = new RegisterRequest("", "", "");
 
 
 
@@ -49,14 +49,4 @@ export class RegisterComponent {
     }
 
 
-    onRoleChange($event: Event) {
-        let rolesArray = this.registerRequest.roles;
-        if (rolesArray.includes(2)) {
-            let index = rolesArray.indexOf(2);
-            this.registerRequest.roles.splice(index, 1);
-        } else {
-            this.registerRequest.roles.push(2);
-        }
-
-    }
 }

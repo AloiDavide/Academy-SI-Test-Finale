@@ -1,24 +1,6 @@
 <app-navbar (userSignOutEvent)="onSignOut()"></app-navbar>
 
-
-<div *ngIf="isHomePage">
-    <app-home></app-home>
-</div>
-<div *ngIf="isLoginPage">
-    <app-login (userAccessEvent)="onUserAccessEvent($event)"></app-login>
-</div>
-<div *ngIf="isRegisterPage">
-    <app-register></app-register>
-</div>
-<div *ngIf="isEnrollPage">
-    <app-enroll (enrollEvent)="onEnrollEvent($event)"></app-enroll>
-</div>
-
-
-<!--Alternativamente, se non serve particolare customizzazione con gli if basta inserire <router-outlet></router-outlet>-->
-
-<!--<router-outlet></router-outlet>-->
-
+<router-outlet></router-outlet>
 
 <app-footer></app-footer>
 

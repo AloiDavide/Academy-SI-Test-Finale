@@ -4,26 +4,18 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body card-header">
-                        <h3 class="card-title font-weight-bold">Find the <span class="highlight">right course</span> for
-                            you.</h3>
+                        <h3 class="card-title font-weight-bold">Find the <span class="highlight">latest weather</span> updates for you.</h3>
                     </div>
                     <div class="card-body">
-                        <p class="lead">Discover a wide range of IT courses tailored to your career needs. Enhance your
-                            skills and advance your career with our expert-led online courses.</p>
+                        <p class="lead">Stay informed with accurate and up-to-date weather forecasts, and save the results for later viewing.</p>
                     </div>
                 </div>
                 <div class="row mt-3 d-flex align-content-center justify-content-center">
 
-                    <div class="col" *ngIf="!isLogged">
-                        <a class="btn btn-warning btn-lg btn-signup" role="button" href="/register">Sign Up</a>
-                    </div>
-                    <div class="col" *ngIf="!isLogged">
-                        <a class="btn btn-dark btn-lg btn-login" role="button" href="/login">Login</a>
+                    <div class="col">
+                        <a class="btn btn-warning btn-lg btn-signup" role="button" href="/forecast">Start searching</a>
                     </div>
 
-                    <div class="col" *ngIf="isLogged">
-                        <a class="btn btn-danger btn-lg btn-enroll" role="button" href="/enroll">Enroll</a>
-                    </div>
                 </div>
             </div>
 

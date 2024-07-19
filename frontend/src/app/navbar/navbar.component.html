@@ -30,7 +30,7 @@
                     <ul class="dropdown-menu justify-content-center text-center">
                         <div *ngIf="logged; then yesLogin else noLogin"></div>
                         <ng-template #yesLogin>
-                            <li>{{loggedUser?.name}} {{loggedUser?.lastname}}</li>
+                            <li>{{loggedUser?.username}}</li>
                             <li><span class="small-text">{{loggedUser?.mail}}</span></li>
                             <img src="profile_placeholder.png" class="img-fluid" alt="profile pic">
                             <li><a class="dropdown-item" routerLink="/enroll" routerLinkActive="active">Enroll</a></li>

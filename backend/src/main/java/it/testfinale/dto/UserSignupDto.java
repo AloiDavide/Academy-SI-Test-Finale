@@ -1,25 +1,24 @@
 package it.testfinale.dto;
 
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class UserSignupDto {
-	private String name;
-	private String lastname;
+	private String username;
+
+	@NotNull
+	@Pattern(regexp = "[A-z0-9\\.\\+_-]+@[A-z0-9\\._-]+\\.[A-z]{2,8}", message = "mail non valida")
 	private String mail;
+
+	@NotNull
 	private String password;
-	private List<Integer> roles;
-	
-	public String getName() {
-		return name;
+
+	public String getUsername() {
+		return username;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getMail() {
 		return mail;
@@ -33,17 +32,13 @@ public class UserSignupDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public List<Integer> getRoles() {
-		return roles;
-	}
-	public void setRoles(List<Integer> roles) {
-		this.roles = roles;
-	}
+
 	@Override
 	public String toString() {
-		return "UserSignupDto [name=" + name + ", lastname=" + lastname + ", mail=" + mail + ", password=" + password
-				+ ", roles=" + roles + "]";
+		return "UserSignupDto{" +
+				"username='" + username + '\'' +
+				", mail='" + mail + '\'' +
+				", password='" + password + '\'' +
+				'}';
 	}
-
-	
 }

@@ -1,0 +1,86 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-10 col-lg-6 col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary bg-gradient text-white text-center">
+                    <h4>Submit your request</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+                        <div class="form-floating mb-3">
+                            <input [(ngModel)]="location" type="text" name="location" class="form-control" id="location"
+                                   placeholder="Enter location" required #request_location="ngModel">
+                            <label for="location">Location</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input [(ngModel)]="weatherRequest.timezone" type="text" name="timezone"
+                                   class="form-control" id="timezone" placeholder="Enter timezone" #timezone="ngModel">
+                            <label for="timezone">Timezone</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input [(ngModel)]="weatherRequest.date" type="date" name="date" class="form-control"
+                                   id="date" placeholder="Enter date" required #date="ngModel">
+                            <label for="date">Date</label>
+                        </div>
+                        <div class="d-grid col-6 col-sm-5 col-md-3 mx-auto py-1">
+                            <button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-block">Submit
+                            </button>
+                        </div>
+                        <div class="d-grid col-6 col-sm-5 col-md-3 mx-auto py-1">
+                            <button (click)="onReset(form)" type="reset" class="btn btn-primary btn-block">Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center" *ngIf="this.localStorageService.get('weather')!=null">
+        <div *ngIf="weatherResponse">
+
+            <div class="mt-4">
+                <h5>Parameters Used:</h5>
+                <p>Location: {{ location }}</p>
+                <p>Timezone: {{ weatherRequest.timezone }}</p>
+            </div>
+
+            <h5 class="mt-4">Daily Data</h5>
+            <ul>
+                <li *ngFor="let day of weatherResponse.daily.time; let i = index">
+                    Date: {{ day }}, Max Temp: {{ weatherResponse.daily.temperature_2m_max[i] }}°C,
+                    Min Temp: {{ weatherResponse.daily.temperature_2m_min[i] }}°C,
+                    Precipitation: {{ weatherResponse.daily.precipitation_sum[i] }} mm
+                </li>
+            </ul>
+            <h5 class="mt-4">Hourly Data</h5>
+            <ul>
+                <li *ngFor="let hour of weatherResponse.hourly.time; let j = index">
+                    Time: {{ hour }}, Temp: {{ weatherResponse.hourly.temperature_2m[j] }}°C,
+                    Humidity: {{ weatherResponse.hourly.relative_humidity_2m[j] }}%,
+                    Precipitation: {{ weatherResponse.hourly.precipitation[j] }} mm
+                </li>
+            </ul>
+        </div>
+
+        <!--        <h5 class="mt-4">Daily Data</h5>-->
+        <!--        <ul>-->
+        <!--            <li *ngFor="let day of weatherResponse.daily.time">-->
+        <!--                Date: {{ day }}, Max-->
+        <!--                Temp: {{ weatherResponse.daily.temperature_2m_max[weatherResponse.daily.time.indexOf(day)] }}°C-->
+        <!--            </li>-->
+        <!--        </ul>-->
+        <!--        <h5 class="mt-4">Hourly Data</h5>-->
+        <!--        <canvas baseChart-->
+        <!--                [datasets]="lineChartData"-->
+        <!--                [labels]="lineChartLabels"-->
+        <!--                [options]="lineChartOptions"-->
+        <!--                [colors]="lineChartColors"-->
+        <!--                [legend]="lineChartLegend"-->
+        <!--                [chartType]="lineChartType">-->
+        <!--        </canvas>-->
+
+    </div>
+
+
+</div>

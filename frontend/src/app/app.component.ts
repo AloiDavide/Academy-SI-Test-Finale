@@ -8,8 +8,6 @@ import {NgIf} from "@angular/common";
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
-import {EnrollComponent} from "./enroll/enroll.component";
-import {EnrollRequest} from "../model/enrollRequest";
 import {LocalStorageService} from "./service/local-storage/local.storage.service";
 
 @Component({
@@ -22,7 +20,6 @@ import {LocalStorageService} from "./service/local-storage/local.storage.service
           HomeComponent,
           LoginComponent,
           RegisterComponent,
-          EnrollComponent,
           NgIf
       ],
       templateUrl: './app.component.html',
@@ -30,21 +27,10 @@ import {LocalStorageService} from "./service/local-storage/local.storage.service
       providers:[UserService, LocalStorageService]
 })
 export class AppComponent {
-    isHomePage:boolean = false;
-    isLoginPage:boolean = false;
-    isRegisterPage:boolean = false;
-    isEnrollPage:boolean = false;
+
     constructor(public router: Router, private userService:UserService, public localStorageService:LocalStorageService) {
-        //somewhat superfluous handling of routing, the app isn't complex enough for this yet
-        this.router.events.subscribe(event => {
-            if (event instanceof NavigationEnd) {
-                this.isHomePage = this.router.url === '/';
-                this.isLoginPage = this.router.url === '/login';
-                this.isRegisterPage = this.router.url === '/register';
-                this.isEnrollPage = this.router.url === '/enroll';
-            }
-    });
-}
+
+    }
 
 
 
@@ -63,11 +49,6 @@ export class AppComponent {
             }
 
         });
-
-    }
-
-
-    onEnrollEvent($event: EnrollRequest) {
 
     }
 

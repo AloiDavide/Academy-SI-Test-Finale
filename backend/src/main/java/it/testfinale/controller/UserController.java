@@ -2,12 +2,10 @@ package it.testfinale.controller;
 
 import java.security.Key;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +18,7 @@ import it.testfinale.dto.UserDto;
 import it.testfinale.dto.UserLoginRequestDto;
 import it.testfinale.dto.UserLoginResponseDto;
 import it.testfinale.dto.UserSignupDto;
-import it.testfinale.dto.UserUpdateDto;
 import it.testfinale.exceptions.ObjectNotFoundException;
-import it.testfinale.model.Role;
 import it.testfinale.model.User;
 import it.testfinale.service.UserService;
 import jakarta.validation.Valid;
@@ -55,7 +51,6 @@ public class UserController {
 	public Response login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
 		try {
 			if (userService.login(userLoginRequestDto)) {
-				//il metodo ok() prende a parametro il token creato da issueToken() e lo include nella risposta
 				return Response.ok(issueToken(userLoginRequestDto.getEmail())).build();
 			}
 			
@@ -83,16 +78,9 @@ public class UserController {
 			e.printStackTrace();
 		}
 		Map<String, Object> map = new HashMap<>();
-		map.put("nome", userInfo.getName());
-		map.put("cognome", userInfo.getLastname());
+		map.put("username", userInfo.getUsername());
 		map.put("email", email);
-		
-		List<String> roles = new ArrayList<>();
-		for (Role role: userInfo.getRoles()) {
-			roles.add(role.getTypology().name());
-		}
-		
-		map.put("ruoli", roles);
+
 		
 		// find creation and expiration time
 		Date creation = new Date();
@@ -146,57 +134,6 @@ public class UserController {
 	    }
 	}
 
-	@PUT
-	@Path("/update")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response userUpdate(@Valid @RequestBody UserUpdateDto userUpdate) {
-	    try {
-	    	//controllo validità password
-	        if (!Pattern.matches(this.validPassword, userUpdate.getPassword())) {
-	            return Response.status(Response.Status.BAD_REQUEST).build();
-	        }
-
-	        userService.updateUserData(userUpdate);
-	        return Response.status(Response.Status.OK).build();
-	    } catch (Exception e) {
-	        return Response.status(Response.Status.BAD_REQUEST).build();
-	    }
-	}
-	
-	@PUT
-	@Path("/{email}/subscribe/{courseId}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response subscribeToCourse(@PathParam("email") String email, @PathParam("courseId") int courseId) {
-		try {
-			userService.subscribeToCourse(email, courseId);
-			return Response.status(Response.Status.OK).build();
-		} catch (NoSuchElementException e) {
-	        return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-	    }
-	}
-	
-	
-	@PUT
-	@Path("/{email}/unsubscribe/{courseId}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response unsubscribeFromCourse(@PathParam("email") String email, @PathParam("courseId") int courseId) {
-		try {
-			userService.unsubscribeFromCourse(email, courseId);
-			return Response.status(Response.Status.OK).build();
-			
-		} catch (NoSuchElementException e) {
-	        return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-	    }
-	}
 
 
 	@GET

@@ -1,70 +1,29 @@
 package it.testfinale.model;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Pattern;
-
 @Entity
-@Table(name="utente")
+@Table(name = "user")
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID_U")
 	private int id;
-	
-	@Pattern(regexp = "[a-zA-Z\\èàùìò]{1,50}", message = "nome con caratteri non ammessi")
-	@Column(name="Nome")
-    private String name;
-	
-	@Pattern(regexp = "[a-zA-Z\\èàùìò]{1,50}", message = "cognome con caratteri non ammessi")
-	@Column(name="Cognome")
-    private String lastname;
-	
-	@Pattern(regexp = "[A-z0-9\\.\\+_-]+@[A-z0-9\\._-]+\\.[A-z]{2,8}", message = "mail non valida")
-	@Column(name="email")
-    private String mail;
-	
 
-	@Column(name="password")
-    private String password;
-	
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	@JoinTable
-	(
-		name = "utenti_corsi",
-		joinColumns = @JoinColumn(name="FK_UC", referencedColumnName = "ID_U"),
-		inverseJoinColumns = @JoinColumn(name="FK_CU", referencedColumnName = "ID_C")
-		
-	)
-	private List<Course> courses = new ArrayList<>();
-	
-	
-	
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	@JoinTable
-	(
-		name = "utente_ruolo",
-		joinColumns = @JoinColumn(name="FK_U", referencedColumnName = "ID_U"),
-		inverseJoinColumns = @JoinColumn(name="FK_R", referencedColumnName = "ID_G")
-		
-	)
-	private List<Role> roles = new ArrayList<>();
-	
-		
+	@Column(name = "username", nullable = false, length = 50)
+	private String username;
 
+	@Column(name = "email", nullable = false, unique = true, length = 100)
+	private String mail;
+
+	@Column(name = "password", nullable = false, length = 255)
+	private String password;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<WeatherDaily> savedWeathers;
+
+	// Getters and setters
 	public int getId() {
 		return id;
 	}
@@ -73,28 +32,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getMail() {
@@ -113,13 +56,21 @@ public class User {
 		this.password = password;
 	}
 
-	public List<Course> getCourses() {
-		return courses;
+	public List<WeatherDaily> getSavedWeathers() {
+		return savedWeathers;
 	}
 
-	public void setCourses(List<Course> corsi) {
-		this.courses = corsi;
+	public void setSavedWeathers(List<WeatherDaily> savedWeathers) {
+		this.savedWeathers = savedWeathers;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"username='" + username + '\'' +
+				", mail='" + mail + '\'' +
+				", password='" + password + '\'' +
+				", savedWeathers=" + savedWeathers +
+				'}';
+	}
 }
