@@ -1,0 +1,42 @@
+
+
+.card {
+    border: none;
+    border-radius: 10px;
+    background-color: #2E3A59;
+}
+
+.card-header {
+    background-color: #1A2536;
+    color: #E76F51;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin: 0;
+    font-weight: 700;;
+}
+
+
+.form-group label {
+    font-weight: 500;
+    color: #F4A261;
+}
+
+.form-control {
+    border-color: #2E3A59;
+}
+
+.form-control:focus {
+    border-color: #E76F51;
+    box-shadow: 0 0 0 0.2rem rgba(231, 111, 81, 0.25);
+}
+
+.btn-primary {
+    background-color: #F4A261;
+    border: none;
+    font-weight: 500;
+    color: #2E3A59;
+}
+
+.btn-primary:hover {
+    background-color: #E76F51;
+}

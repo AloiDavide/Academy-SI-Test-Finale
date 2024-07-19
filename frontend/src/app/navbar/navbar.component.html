@@ -1,0 +1,59 @@
+<!--navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="logo.png" alt="logo" class="d-inline-block align-text-top logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end mx-auto" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">COURSES</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">CATEGORIES</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">CONTACTS</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle btn-outline-light fw-bold" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        USER
+                    </a>
+                    <ul class="dropdown-menu justify-content-center text-center">
+                        <div *ngIf="logged; then yesLogin else noLogin"></div>
+                        <ng-template #yesLogin>
+                            <li>{{loggedUser?.name}} {{loggedUser?.lastname}}</li>
+                            <li><span class="small-text">{{loggedUser?.mail}}</span></li>
+                            <img src="profile_placeholder.png" class="img-fluid" alt="profile pic">
+                            <li><a class="dropdown-item" routerLink="/enroll" routerLinkActive="active">Enroll</a></li>
+                            <li><a class="dropdown-item" href="#">My Profile</a></li>
+                            <li><a class="dropdown-item" href="/" role="button" (click)="onSignOut()">Sign out</a></li>
+                        </ng-template>
+                        <ng-template #noLogin>
+                            <li><a class="dropdown-item" routerLink="/login" routerLinkActive="active">Log In</a></li>
+                            <li><a class="dropdown-item" routerLink="/register" routerLinkActive="active">Register</a></li>
+                        </ng-template>
+                    </ul>
+                </li>
+                <li>
+                    <form class="" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    </form>
+                </li>
+                <li>
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
