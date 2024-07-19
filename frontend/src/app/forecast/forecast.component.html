@@ -40,9 +40,7 @@
         <div *ngIf="weatherResponse">
 
             <div class="mt-4">
-                <h5>Parameters Used:</h5>
-                <p>Location: {{ location }}</p>
-                <p>Timezone: {{ weatherRequest.timezone }}</p>
+                <p>Timezone: {{ weatherResponse.timezone }} - {{ weatherResponse.timezone_abbreviation }}</p>
             </div>
 
             <h5 class="mt-4">Daily Data</h5>
@@ -80,6 +78,9 @@
         <!--                [chartType]="lineChartType">-->
         <!--        </canvas>-->
 
+        <div class="d-grid col-6 col-sm-5 col-md-3 mx-auto py-1">
+            <button (click)="onSave()" type="reset" class="btn btn-primary btn-block">Save this data</button>
+        </div>
     </div>
 
 

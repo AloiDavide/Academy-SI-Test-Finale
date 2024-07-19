@@ -11,6 +11,7 @@ export class WeatherService {
 
     private weatherApi = 'https://api.open-meteo.com/v1/forecast';
     private geocodingApi = 'https://geocoding-api.open-meteo.com/v1/search';
+    private backendApi = 'https://localhost:8080/api/weather/save/';
 
     constructor(private http: HttpClient) {
     }
@@ -22,7 +23,7 @@ export class WeatherService {
             longitude: weatherRequest.longitude.toString(),
             daily: 'temperature_2m_max,temperature_2m_min,precipitation_sum',
             hourly: 'temperature_2m,relative_humidity_2m,precipitation',
-            timezone: "auto",
+            timezone: weatherRequest.timezone,
             start_date: weatherRequest.date,
             end_date: weatherRequest.date,
         };
@@ -37,6 +38,10 @@ export class WeatherService {
 
         const params = {name: location};
         return this.http.get<any>(this.geocodingApi+"?name="+location, {params});
+    }
+
+    saveToUser(email:string, weatherResponse:WeatherResponse):Observable<any> {
+        return this.http.post(`${this.backendApi}/${email}`, weatherResponse);
     }
 
 }

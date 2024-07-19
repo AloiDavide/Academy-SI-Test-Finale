@@ -5,6 +5,7 @@ import {WeatherRequest} from "../../model/weatherRequest";
 import {WeatherResponse} from "../../model/weatherResponse";
 import {LocalStorageService} from "../service/local-storage/local.storage.service";
 import {NgFor, NgIf} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-forecast',
@@ -12,14 +13,14 @@ import {NgFor, NgIf} from "@angular/common";
     imports: [FormsModule, NgIf, NgFor],
     templateUrl: './forecast.component.html',
     styleUrl: './forecast.component.css',
-    providers: [WeatherService, LocalStorageService]
+    providers: [WeatherService, LocalStorageService, Router]
 })
 export class ForecastComponent {
     weatherRequest: WeatherRequest = new WeatherRequest(0, 0, "", "");
     weatherResponse: WeatherResponse;
     location: string;
 
-    constructor(private weatherService: WeatherService, public localStorageService: LocalStorageService) {
+    constructor(private weatherService: WeatherService, public localStorageService: LocalStorageService, private router : Router) {
         if (this.localStorageService.get("weather") != null) {
             this.weatherResponse = JSON.parse(this.localStorageService.get("weather"));
         }
@@ -79,5 +80,18 @@ export class ForecastComponent {
     onReset(form: NgForm) {
         this.localStorageService.clear();
         form.reset();
+    }
+
+    onSave() {
+        const user = JSON.parse(this.localStorageService.get("loggedUser"));
+        this.weatherService.saveToUser(user.email, this.weatherResponse).subscribe({
+            next: res => {
+                this.router.navigate(['/saved']);
+            },
+            error: (error) => {
+                console.error('Error saving weather data:', error);
+                alert('Could not save the data to your account.');
+            }
+        });
     }
 }
