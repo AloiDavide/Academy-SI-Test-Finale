@@ -11,7 +11,7 @@ export class WeatherService {
 
     private weatherApi = 'https://api.open-meteo.com/v1/forecast';
     private geocodingApi = 'https://geocoding-api.open-meteo.com/v1/search';
-    private backendApi = 'https://localhost:8080/api/weather/save/';
+    private backendApi = 'http://localhost:8080/api/weather/save';
 
     constructor(private http: HttpClient) {
     }
@@ -40,8 +40,9 @@ export class WeatherService {
         return this.http.get<any>(this.geocodingApi+"?name="+location, {params});
     }
 
-    saveToUser(email:string, weatherResponse:WeatherResponse):Observable<any> {
-        return this.http.post(`${this.backendApi}/${email}`, weatherResponse);
+    saveToUser(mail:string, weatherResponse:WeatherResponse):Observable<any> {
+        console.log(weatherResponse);
+        return this.http.post(`${this.backendApi}/${mail}`, weatherResponse);
     }
 
 }

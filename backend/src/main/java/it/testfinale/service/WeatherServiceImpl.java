@@ -2,7 +2,8 @@ package it.testfinale.service;
 
 import it.testfinale.dao.UserDao;
 import it.testfinale.dao.WeatherDailyDao;
-import it.testfinale.dto.WeatherRequest;
+import it.testfinale.dto.HourlyDto;
+import it.testfinale.dto.WeatherDto;
 import it.testfinale.model.User;
 import it.testfinale.model.WeatherDaily;
 import it.testfinale.model.WeatherHourly;
@@ -11,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,7 +27,7 @@ public class WeatherServiceImpl implements WeatherService{
 
     private ModelMapper modelMapper = new ModelMapper();
 
-    public void saveWeather(WeatherRequest weatherRequest, String email) throws ObjectNotFoundException {
+    public void saveWeather(WeatherDto weatherDto, String email) throws ObjectNotFoundException {
 
         Optional<User> userOptional = userRepository.findByMail(email);
         if (!userOptional.isPresent()) {
@@ -32,24 +35,43 @@ public class WeatherServiceImpl implements WeatherService{
         }
         User user = userOptional.get();
 
-        WeatherDaily daily = modelMapper.map(weatherRequest, WeatherDaily.class);
 
+        for (String day : weatherDto.getDaily().getTime()) {
+            int dayIndex = weatherDto.getDaily().getTime().indexOf(day);
 
-//
-//        // Create WeatherHourly entities from the hourly data in WeatherRequest
-//        List<WeatherHourly> weatherHourlies = weatherRequest.getHourly().stream().map(hourlyDto -> {
-//            WeatherHourly weatherHourly = new WeatherHourly();
-//            weatherHourly.setWeatherDaily(weatherDaily);
-//            weatherHourly.setTime(hourlyDto.getTime());
-//            weatherHourly.setTemperature(hourlyDto.getTemperature());
-//            weatherHourly.setHumidity(hourlyDto.getHumidity());
-//            weatherHourly.setPrecipitation(hourlyDto.getPrecipitation());
-//            return weatherHourly;
-//        }).toList();
-//
-//        weatherDaily.setWeatherHourlies(weatherHourlies);
+            WeatherDaily wd = new WeatherDaily();
+            wd.setUser(user);
+            wd.setDay(day);
+            wd.setLatitude(weatherDto.getLatitude());
+            wd.setLongitude(weatherDto.getLongitude());
+            wd.setTimezone(weatherDto.getTimezone());
+            wd.setTimezoneAbbreviation(weatherDto.getTimezoneAbbreviation());
+            wd.setTemperature2mMax(weatherDto.getDaily().getTemperature2mMax().get(dayIndex));
+            wd.setTemperature2mMin(weatherDto.getDaily().getTemperature2mMin().get(dayIndex));
+            wd.setPrecipitationSum(weatherDto.getDaily().getPrecipitationSum().get(dayIndex));
 
-        // Save the WeatherDaily entity (which will also save the WeatherHourly entities due to cascade settings)
-        weatherDailyRepository.save(daily);
+            HourlyDto hourlyDto = weatherDto.getHourly();
+            
+            List<WeatherHourly> weatherHourlies = new ArrayList<>();
+            for (int j = 0; j < hourlyDto.getTime().size(); j++) {
+                String time = hourlyDto.getTime().get(j);
+                if (time.startsWith(day)) {
+                    WeatherHourly wh = new WeatherHourly();
+                    wh.setDay(wd);
+                    wh.setTime(time.substring(time.length() - 5));
+                    wh.setTemperature2m(hourlyDto.getTemperature2m().get(j));
+                    wh.setRelativeHumidity2m(hourlyDto.getRelativeHumidity2m().get(j));
+                    wh.setPrecipitation(hourlyDto.getPrecipitation().get(j));
+                    weatherHourlies.add(wh);
+                }
+            }
+
+            wd.setHours(weatherHourlies);
+
+            //this will also save all the WeatherHourly entities due to cascade settings
+            weatherDailyRepository.save(wd);
+        }
+
     }
+
 }

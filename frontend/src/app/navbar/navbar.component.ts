@@ -21,8 +21,6 @@ export class NavbarComponent {
     logged:boolean = false;
     loggedUser: UserDto | null = null;
 
-    @Output()
-    userSignOutEvent: EventEmitter<any> = new EventEmitter<any>();
     constructor(public localStorageService:LocalStorageService) {
         if (localStorageService.get("loggedUser") != null){
             console.log(localStorageService.get("loggedUser"));
@@ -32,8 +30,9 @@ export class NavbarComponent {
         console.log('Currently logged in navbar:');
         console.log(this.loggedUser);
         console.log(this.logged);
+
     }
     onSignOut() {
-        this.userSignOutEvent.emit();
+        this.localStorageService.clear();
     }
 }

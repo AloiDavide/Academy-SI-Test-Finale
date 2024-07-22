@@ -21,14 +21,26 @@ public class WeatherDaily {
 	@Column(name = "day", nullable = false)
 	private String day;
 
+	@Column(name = "latitude", nullable = false)
+	private double latitude;
+
+	@Column(name = "longitude", nullable = false)
+	private double longitude;
+
+	@Column(name = "timezone")
+	private String timezone;
+
+	@Column(name = "timezone_short")
+	private String timezoneAbbreviation;
+
 	@Column(name = "temperature_max")
-	private double temperatureMax;
+	private double temperature2mMax;
 
 	@Column(name = "temperature_min")
-	private double temperatureMin;
+	private double temperature2mMin;
 
 	@Column(name = "precipitation_tot")
-	private double precipitationTot;
+	private double precipitationSum;
 
 	@OneToMany(mappedBy = "day", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<WeatherHourly> hours;
@@ -57,28 +69,28 @@ public class WeatherDaily {
 		this.day = day;
 	}
 
-	public double getTemperatureMax() {
-		return temperatureMax;
+	public double getTemperature2mMax() {
+		return temperature2mMax;
 	}
 
-	public void setTemperatureMax(double temperatureMax) {
-		this.temperatureMax = temperatureMax;
+	public void setTemperature2mMax(double temperature2mMax) {
+		this.temperature2mMax = temperature2mMax;
 	}
 
-	public double getTemperatureMin() {
-		return temperatureMin;
+	public double getTemperature2mMin() {
+		return temperature2mMin;
 	}
 
-	public void setTemperatureMin(double temperatureMin) {
-		this.temperatureMin = temperatureMin;
+	public void setTemperature2mMin(double temperature2mMin) {
+		this.temperature2mMin = temperature2mMin;
 	}
 
-	public double getPrecipitationTot() {
-		return precipitationTot;
+	public double getPrecipitationSum() {
+		return precipitationSum;
 	}
 
-	public void setPrecipitationTot(double precipitationTot) {
-		this.precipitationTot = precipitationTot;
+	public void setPrecipitationSum(double precipitationSum) {
+		this.precipitationSum = precipitationSum;
 	}
 
 	public List<WeatherHourly> getHours() {
@@ -89,5 +101,35 @@ public class WeatherDaily {
 		this.hours = hours;
 	}
 
+	public double getLatitude() {
+		return latitude;
+	}
 
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
+	}
+
+	public String getTimezoneAbbreviation() {
+		return timezoneAbbreviation;
+	}
+
+	public void setTimezoneAbbreviation(String timezoneAbbreviation) {
+		this.timezoneAbbreviation = timezoneAbbreviation;
+	}
 }

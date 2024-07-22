@@ -1,9 +1,9 @@
 package it.testfinale.service;
 
-import it.testfinale.dto.WeatherRequest;
+import it.testfinale.dto.WeatherDto;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 public interface WeatherService {
 
-    void saveWeather(WeatherRequest weatherRequest, String email) throws ObjectNotFoundException;
+    void saveWeather(WeatherDto WeatherDto, String email) throws ObjectNotFoundException;
 }

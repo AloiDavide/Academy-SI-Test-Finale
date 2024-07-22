@@ -3,7 +3,6 @@ export class WeatherResponse {
     longitude: number;
     timezone: string;
     timezone_abbreviation: string;
-    utc_offset_seconds: number;
 
     daily: {
         temperature_2m_max: number[];

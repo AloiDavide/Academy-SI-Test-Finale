@@ -6,6 +6,7 @@ import {WeatherResponse} from "../../model/weatherResponse";
 import {LocalStorageService} from "../service/local-storage/local.storage.service";
 import {NgFor, NgIf} from "@angular/common";
 import {Router} from "@angular/router";
+import {UserDto} from "../../model/userDto";
 
 @Component({
     selector: 'app-forecast',
@@ -22,7 +23,9 @@ export class ForecastComponent {
 
     constructor(private weatherService: WeatherService, public localStorageService: LocalStorageService, private router : Router) {
         if (this.localStorageService.get("weather") != null) {
+
             this.weatherResponse = JSON.parse(this.localStorageService.get("weather"));
+
         }
 
     }
@@ -83,8 +86,15 @@ export class ForecastComponent {
     }
 
     onSave() {
-        const user = JSON.parse(this.localStorageService.get("loggedUser"));
-        this.weatherService.saveToUser(user.email, this.weatherResponse).subscribe({
+        const user:UserDto = JSON.parse(this.localStorageService.get("loggedUser"));
+        const weather:WeatherResponse = JSON.parse(this.localStorageService.get("weather"));
+
+        if (user == null){
+            alert('Please log into your account to access this feature.');
+            return;
+        }
+
+        this.weatherService.saveToUser(user.mail, weather).subscribe({
             next: res => {
                 this.router.navigate(['/saved']);
             },

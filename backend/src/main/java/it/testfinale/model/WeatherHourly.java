@@ -18,15 +18,14 @@ public class WeatherHourly {
 	@JoinColumn(name = "day_id", nullable = false)
 	private WeatherDaily day;
 
-	@Temporal(TemporalType.TIME)
 	@Column(name = "hour", nullable = false)
-	private Time hour;
+	private String time;
 
 	@Column(name = "temperature")
-	private Double temperature;
+	private Double temperature2m;
 
 	@Column(name = "humidity")
-	private Double humidity;
+	private Double relativeHumidity2m;
 
 	@Column(name = "precipitation")
 	private Double precipitation;
@@ -48,28 +47,28 @@ public class WeatherHourly {
 		this.day = day;
 	}
 
-	public Time getHour() {
-		return hour;
+	public String getTime() {
+		return time;
 	}
 
-	public void setHour(Time hour) {
-		this.hour = hour;
+	public void setTime(String time) {
+		this.time = time;
 	}
 
-	public Double getTemperature() {
-		return temperature;
+	public Double getTemperature2m() {
+		return temperature2m;
 	}
 
-	public void setTemperature(Double temperature) {
-		this.temperature = temperature;
+	public void setTemperature2m(Double temperature2m) {
+		this.temperature2m = temperature2m;
 	}
 
-	public Double getHumidity() {
-		return humidity;
+	public Double getRelativeHumidity2m() {
+		return relativeHumidity2m;
 	}
 
-	public void setHumidity(Double humidity) {
-		this.humidity = humidity;
+	public void setRelativeHumidity2m(Double relativeHumidity2m) {
+		this.relativeHumidity2m = relativeHumidity2m;
 	}
 
 	public Double getPrecipitation() {

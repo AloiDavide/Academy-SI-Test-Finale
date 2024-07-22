@@ -28,32 +28,12 @@ import {LocalStorageService} from "./service/local-storage/local.storage.service
 })
 export class AppComponent {
 
-    constructor(public router: Router, private userService:UserService, public localStorageService:LocalStorageService) {
+    constructor(
+        public router: Router,
+        private userService:UserService,
+        public localStorageService:LocalStorageService) {
 
     }
 
 
-
-
-    onUserAccessEvent(email: string) {
-        //after a login, fetch the user by email and store their data
-        this.userService.getUserByMail(email).subscribe({
-            next: (result)=>{
-                this.localStorageService.store("loggedUser", JSON.stringify(result));
-                location.reload();
-            },
-            error:(error) =>{
-                console.error('There was an error during the registration process', error);
-                    alert('Login failed. We couldn\'t find your account.');
-                    this.onSignOut();
-            }
-
-        });
-
-    }
-
-
-    onSignOut() {
-        this.localStorageService.clear();
-    }
 }

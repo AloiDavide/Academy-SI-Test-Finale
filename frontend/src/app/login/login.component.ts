@@ -18,10 +18,10 @@ export class LoginComponent {
     loginRequest: LoginRequest = new LoginRequest("", "");
     jwtToken: string = "";
 
-    @Output()
-    userAccessEvent: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private userService: UserService, public router: Router) {
+    constructor(private userService: UserService,
+                public router: Router,
+                public localStorageService:LocalStorageService) {
 
     }
 
@@ -35,16 +35,26 @@ export class LoginComponent {
                     // On successful call
 
                     //extract the token and memorize it in the local storage
-                    localStorage.setItem('token', result.token);
+                    this.localStorageService.store('token', result.token);
 
                     // Emit the event so that app-component can access the data of the user who just logged in.
+                    this.userService.getUserByMail(this.loginRequest.email).subscribe({
+                        next: (result)=>{
+                            this.localStorageService.store("loggedUser", JSON.stringify(result));
+                            this.router.navigate(["/forecast"])
 
-                    this.userAccessEvent.emit(this.loginRequest.email);
+                        },
+                        error:(error) =>{
+                            console.error('There was an error during the registration process', error);
+                                alert('Login failed. We couldn\'t find your account.');
+                                this.localStorageService.clear();
+                        }
 
-                    // Navigate back to home.
-                    this.router.navigate(['/']);
+                    });
 
-                    loginForm.reset()
+
+
+
                 },
                 error: (error) => {
                     console.error('There was an error during the login process', error);
