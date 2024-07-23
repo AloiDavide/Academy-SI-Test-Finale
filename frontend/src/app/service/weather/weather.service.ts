@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {WeatherRequest} from "../../../model/weatherRequest";
 import {Observable} from "rxjs";
 import {WeatherResponse} from "../../../model/weatherResponse";
+import {SavedWeather} from "../../../model/savedWeather";
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class WeatherService {
 
     private weatherApi = 'https://api.open-meteo.com/v1/forecast';
     private geocodingApi = 'https://geocoding-api.open-meteo.com/v1/search';
-    private backendApi = 'http://localhost:8080/api/weather/save';
+    private backendApi = 'http://localhost:8080/api/weather';
 
     constructor(private http: HttpClient) {
     }
@@ -42,7 +43,11 @@ export class WeatherService {
 
     saveToUser(mail:string, weatherResponse:WeatherResponse):Observable<any> {
         console.log(weatherResponse);
-        return this.http.post(`${this.backendApi}/${mail}`, weatherResponse);
+        return this.http.post(`${this.backendApi}/save/${mail}`, weatherResponse);
+    }
+
+    retrieveFromUser(mail:string):Observable<SavedWeather[]> {
+        return this.http.get<SavedWeather[]>(`${this.backendApi}/all/${mail}`);
     }
 
 }

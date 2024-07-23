@@ -1,0 +1,25 @@
+.card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.btn-dark {
+    background-color: #343a40;
+    border-color: #343a40;
+    transition: background-color 0.3s ease;
+}
+
+.btn-dark:hover {
+    background-color: #23272b;
+    border-color: #1d2124;
+}

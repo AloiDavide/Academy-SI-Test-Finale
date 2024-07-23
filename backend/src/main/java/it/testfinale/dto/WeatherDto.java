@@ -7,6 +7,7 @@ public class WeatherDto {
 
     private double latitude;
     private double longitude;
+    private String location;
     private String timezone;
     @JsonProperty("timezone_abbreviation")
     private String timezoneAbbreviation;
@@ -48,7 +49,13 @@ public class WeatherDto {
         this.timezoneAbbreviation = timezoneAbbreviation;
     }
 
+    public String getLocation() {
+        return location;
+    }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public DailyDto getDaily() {
         return daily;

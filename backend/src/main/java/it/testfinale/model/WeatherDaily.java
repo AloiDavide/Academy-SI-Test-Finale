@@ -27,6 +27,9 @@ public class WeatherDaily {
 	@Column(name = "longitude", nullable = false)
 	private double longitude;
 
+	@Column(name = "location")
+	private String location;
+
 	@Column(name = "timezone")
 	private String timezone;
 
@@ -131,5 +134,13 @@ public class WeatherDaily {
 
 	public void setTimezoneAbbreviation(String timezoneAbbreviation) {
 		this.timezoneAbbreviation = timezoneAbbreviation;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

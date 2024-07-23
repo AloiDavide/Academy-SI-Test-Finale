@@ -1,22 +1,17 @@
 import {Component, Input} from '@angular/core';
+import {SavedWeather} from "../../model/savedWeather";
 
 @Component({
-  selector: 'app-course-card',
+  selector: 'app-weather-card',
   standalone: true,
   imports: [],
-  templateUrl: './course-card.component.html',
-  styleUrl: './course-card.component.css'
+  templateUrl: './weather-card.component.html',
+  styleUrl: './weather-card.component.css'
 })
 export class WeatherCardComponent {
+    @Input() forecast!: SavedWeather;
 
-
-    @Input()
-    title: string = "Titolo corso";
-    @Input()
-    shortDescription: string = "Placeholder descrizione breve corso";
-    @Input()
-    duration:number = 0;
-    @Input()
-    imageName: string ="course_placeholder.jpg";
-
+    onExpand() {
+        //TODO retrieve the hourly data for that day and show a graph
+    }
 }

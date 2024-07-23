@@ -1,6 +1,7 @@
 export class WeatherResponse {
     latitude: number;
     longitude: number;
+    location: string;
     timezone: string;
     timezone_abbreviation: string;
 
