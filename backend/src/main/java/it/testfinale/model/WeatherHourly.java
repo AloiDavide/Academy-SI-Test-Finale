@@ -1,10 +1,6 @@
 package it.testfinale.model;
 
-import java.sql.Time;
-
 import jakarta.persistence.*;
-
-
 
 @Entity
 @Table(name = "weather_hourly")
