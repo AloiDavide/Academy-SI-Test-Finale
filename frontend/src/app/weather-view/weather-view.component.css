@@ -1,0 +1,11 @@
+.tall-card {
+    height: 300px;
+}
+
+.tall-card .card-body {
+    height: 100%;
+}
+
+.card {
+    background-color: lightcyan;
+}

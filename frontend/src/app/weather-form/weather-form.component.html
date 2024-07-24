@@ -1,0 +1,38 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-10 col-lg-6 col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary bg-gradient text-white text-center">
+                    <h4>Submit your request</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+                        <div class="form-floating mb-3">
+                            <input [(ngModel)]="city" type="text" name="location" class="form-control" id="city"
+                                   placeholder="Enter City" required #request_city="ngModel">
+                            <label for="city">City</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input [(ngModel)]="weatherRequest.timezone" type="text" name="timezone"
+                                   class="form-control" id="timezone" placeholder="Enter timezone" #timezone="ngModel">
+                            <label for="timezone">Timezone</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input [(ngModel)]="weatherRequest.date" type="date" name="date" class="form-control"
+                                   id="date" placeholder="Enter date" required #date="ngModel">
+                            <label for="date">Date</label>
+                        </div>
+                        <div class="d-grid col-3 mx-auto py-1">
+                            <button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-block">Submit
+                            </button>
+                        </div>
+                        <div class="d-grid col-3 mx-auto py-1">
+                            <button (click)="onReset(form)" type="reset" class="btn btn-primary btn-block">Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

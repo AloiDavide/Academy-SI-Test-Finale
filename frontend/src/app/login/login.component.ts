@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {LoginRequest} from "../../model/loginRequest";
 import {FormsModule, NgForm} from "@angular/forms";
 import {NgIf} from "@angular/common";
