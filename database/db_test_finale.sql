@@ -1,7 +1,5 @@
 DROP SCHEMA weather;
-
 CREATE SCHEMA IF NOT EXISTS weather;
-
 USE weather;
 
 
@@ -16,6 +14,11 @@ CREATE TABLE IF NOT EXISTS weather_daily (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     day DATE NOT NULL,
+    latitude DOUBLE,
+    longitude DOUBLE,
+    location VARCHAR(255),
+    timezone VARCHAR(255),
+    timezone_short VARCHAR(5),
     temperature_max FLOAT,
     temperature_min FLOAT,
     precipitation_tot FLOAT,
@@ -31,8 +34,6 @@ CREATE TABLE IF NOT EXISTS weather_hourly (
     precipitation FLOAT,
     FOREIGN KEY (day_id) REFERENCES weather_daily(id) ON DELETE CASCADE
 );
-
-
 
 SELECT * FROM user;
 SELECT * FROM weather_daily;
